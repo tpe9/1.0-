@@ -1,0 +1,41 @@
+{#login/templates/login/reset_pd.html#}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+</head>
+<body>
+     <div style="margin: 15% 40%;">
+        <h1>欢迎修改密码！</h1>
+       <form action="/reset_pd/" method="post">
+            {% if message %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% endif %}
+        {% csrf_token %}
+            <p>
+                <label for="id_username">用户名：</label>
+                <input type="text" id="id_username" name="username" placeholder="用户名" autofocus required />
+            </p>
+            <p>
+                <label for="old_passwd">老密码：</label>
+                <input type="password" id="old_passwd" name="old_passwd" placeholder="老密码" autofocus required />
+            </p>
+          
+            <p>
+                <label for="new_passwd">新密码：</label>
+                <input type="password" id="new_passwd" placeholder="新密码" name="new_passwd" required >
+            </p>
+            <p>
+                <label for="new_passwd2">再次确认：</label>
+                <input type="password" id="new_passwd2" placeholder="再次确认" name="new_passwd2" required >
+            </p>
+            <input type="submit" value="确定">
+        </form>
+    </div>
+
+
+
+</body>
+</html>
