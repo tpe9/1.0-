@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>请假申请</title>
+    <style>
+        body{
+            background-image:url('http://i1.fuimg.com/693758/8cab9e52636aea2d.jpg');
+            background-repeat:no-repeat;
+            background-size:100% 100%;
+            width:100%;
+            height:100%;
+            background-attachment:fixed
+            
+        }
+        div {
+            width: 300px;
+            height: 180px;
+            margin: 10px auto;
+            color: #fff;
+            font-size: 24px;
+        }
+        .fi{
+            text-align:center
+        }
+        .m{
+            text-align:center
+        }
+       
+    </style>
+</head>
+<body>
+    <h1 class="fi">
+        请假申请
+    </h1>
+    <form action="/qingjia/" method="post">
+        <br />
+        <p class="fi" style="font-family:黑体">
+            请选择请假日期：
+            <input type="date" id="date" name="date" />&nbsp;
+            <input type="submit" value="提交">
+        </p>
+    </form>
+    <form action="/qingjia/" method="post"> </form>
+        <div class="fi"><input type="button" onclick="javascript:history.back(-1);" value="返回上页">
+   </div>
+</body>
+</html>
