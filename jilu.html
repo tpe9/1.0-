@@ -6,9 +6,11 @@
 
     <style type="text/css">
         body {
-            margin: 0px;
-            padding: 0px;
+            margin: 20px;
+            padding: 20px;
             /* background: #ddd; */
+            background-color:antiquewhite;
+            text-align:center
         }
 
         .everyWeekDay .weekday {
@@ -38,10 +40,32 @@
         .col-md-8 {
             align-self: center
         }
+    .col-md-81 {            align-self: center
+}
+    .col-md-82 {            align-self: center
+}
+.STYLE2 {
+	align-self: center;
+	font-family: "Courier New", Courier, monospace;
+	font-weight: bold;
+}
+    .STYLE3 {
+	font-family: "Courier New", Courier, monospace;
+	font-weight: bold;
+}
+    .col-md-83 {            align-self: center
+}
+    .col-md-84 {            align-self: center
+}
+    .col-md-85 {            align-self: center
+}
+    .col-md-86 {            align-self: center
+}
     </style>
-   </head>
-<body onload="time()">
-    <script language="JavaScript">
+</head>
+<body onLoad="time()">
+    <h1>
+      <script language="JavaScript">
         function CurrentTime() {
             var now = new Date();   //得到当前时间
             var hh = now.getHours();    //取时
@@ -55,56 +79,66 @@
             clock += ss;
             return (clock);
         }</script>
-    <h3>
-        本月考勤记录
-    </h3>
-
-
-
+    </h1>
+<div class="text">
+      <h1 align="justify"><span class="col-md-8">本月考勤记录 </span></h1>
+      <span class="col-md-8">{% csrf_token %}                </span></div>
     <form action="/jilu/" method="post">
-        {% csrf_token %}
-
-        <div class="col-md-8">
-            <div class="text"><span>本月打卡记录：</span></div>
-            <div class="col-md-8 text-left">{{records}}</div>
-            <div class="text"><span>本月迟到次数：</span></div>
-            <div class="col-md-8 text-left">
-                {{late}}
-                <br />
-                <a href="./child1.html" title="迟到记录" target="_blank">迟到记录</a>
+      <div class="STYLE2">            </div>
+            <div class="text STYLE3">
+              <div align="justify" class="col-md-8"><span class="col-md-8">本月打卡记录：{ {records}}</span></div>
             </div>
-            <div class="text">
-                <span>本月请假次数：</span>
+            <div class="col-md-8 text-left STYLE3">              </div>
+            <div class="text STYLE3">
+              <div align="justify" class="col-md-8"><span class="col-md-8">
+    本月迟到次数：{{late}}
+    &nbsp;<a href="./child1.html" title="迟到记录" target="_blank"> 迟到记录</a>
+</span></div>
             </div>
-            <div class="col-md-8 text-left">
-                {{leave}}<br />
-                <a href="./child3.html" title="请假记录" target="_blank">请假记录</a>
+            <div class="col-md-8 text-left STYLE3">                </div>
+            <div class="text STYLE3">
+                <div align="justify" class="col-md-8"><span class="col-md-8">
+    本月请假次数： {{leave}}
+    &nbsp;<a href="./child3.html" title="请假记录" target="_blank">     请假记录</a>
+</span></div>
             </div>
-            <div class="text"><span>本月加班次数：</span></div>
-            <div class="col-md-8 text-left">
-                {{extra}}<br />
-                <div class="text"><span>本月早退次数：</span></div>
-                <div class="col-md-8 text-left">
-                    {{early}}
-                    <br />
-                    <a href="./child2.html" title="早退记录" target="_blank">早退记录</a>
+            <div class="text STYLE3">
+              <div align="justify" class="col-md-8"><span class="col-md-8">本月加班次数：{{extra}}</span></div>
+            </div>
+            <!--<div class="col-md-8 text-left">
+                <div align="justify" class="col-md-8"><span class="col-md-8"><br />
+                </span></div>-->
+                <div class="text STYLE3">
+                  <div align="justify" class="col-md-8"><span class="col-md-8">本月早退次数：{{early}} &nbsp;
+                      <a href="./child2.html" title="早退记录" target="_blank">早退记录</a> </span></div>
                 </div>
-                <div class="text"><span>本月出差次数：</span></div>
-                <div class="col-md-8 text-left">
-                    {{business}}<br />
-                    <a href="./child4.html" title="出差记录" target="_blank">出差记录</a>
+                <div class="col-md-8 text-left STYLE3">
+                    <div align="justify" class="col-md-8"></div>
+              </div>
+                <div class="text STYLE3">
+                  <div align="justify" class="col-md-8"><span class="col-md-8">本月出差次数：{{business}}&nbsp;
+                      <a href="./child4.html" title="出差记录" target="_blank">出差记录</a></span></div>
                 </div>
-                <div class="text"><span>本月出差天数：</span></div>
-                <div class="col-md-8 text-left">{{businesstime}}</div>
-            </div>
+                <!--<div class="col-md-8 text-left STYLE3">
+                    <div align="justify" class="col-md-8"><span class="col-md-8"><br />
+                    </span></div>-->
+                </div>
+                <div class="text STYLE3">
+                  <div align="justify" class="col-md-8"><span class="col-md-8">本月出差天数：{{businesstime}}</span></div>
+                </div>
+                <div class="col-md-8 text-left">
+                  <div align="justify" class="col-md-8"></div>
+              </div>
+      </div>
     </form>
-    <form action="/jilu/" method="get"><input type="submit" name="Submit" value="返回上页"></form>
-    </div>
-
-
-
+    <form action="/jilu/" method="get">
+      <div>
+        <input type="submit" name="Submit" value="返回上页">
+      </div>
+    </form>
+    <div align="center"></div>
     <div id="app">
-        <div style="position: absolute;width: 100%;border-radius: 5px;background-color:rgb(202, 237, 255);" id="dateOuter">
+        <div style="position: absolute; width: 100%; border-radius: 5px; background-color:rgb(202, 237, 255); left: 21px; top: 417px; visibility: hidden;" id="dateOuter">
 
             <div class="attendtittle" style="height: 51px;line-height: 51px;border-bottom: 1px solid  #E6E6EB;">
                 <span style="margin-left: 16px;font-size: 16px;color: #333;font-weight: bold;">工作日历</span>
@@ -112,17 +146,14 @@
                 <span style="margin-left: 17px;color:  #8E8E93;cursor: pointer;" @click.stop.prevent="lastMonthClick()"><</span>
                 <span style="margin-left: 18px;color:  #8E8E93;cursor: pointer;" @click.stop.prevent="nextMonthClick()">></span>
                 <span style="font-size: 14px;color: #2D2D2D;margin-left: 17px;">{{checkYear}}年</span>
-                <span style="font-size: 14px;color: #2D2D2D;">{{checkMonth}}月</span>
-            </div>
+            <span style="font-size: 14px;color: #2D2D2D;">{{checkMonth}}月</span></div>
             <!--表体-->
-            <div id="attendwrap" style="height: 300px;">
+          <div id="attendwrap" style="height: 300px;">
                 <div id="attendwrapleft" style="width: 60%;float: left;">
                     <div class="everyWeekDay">
                         <span v-for="(item,index) in weekDays" class="weekday">
                             <span v-if="item=='日' || item=='六'" class="weekday" style="color:#0089FA;">{{item}}</span>
-                            <span class="weekday" style="color:#888;" v-else>{{item}}</span>
-                        </span>
-                    </div>
+                            <span class="weekday" style="color:#888;" v-else>{{item}}</span>                        </span>                    </div>
                     <div class="everyDay">
                         <!--空白站位-->
                         <span v-for="item1 in ThisWeekDayCounrt" :key="item1" class="days"></span>
@@ -140,9 +171,7 @@
                                             <div v-if="val==2" :style="{position: 'absolute',bottom: '0px',right: 14*(_in+1)+'px',color: '#5856D6',fontSize: '12px'}">差</div>
                                             <div v-if="val==3" :style="{position: 'absolute',bottom: '0px',right: 14*(_in+1)+'px',color: '#FF9500',fontSize: '12px'}">假</div>
                                             <div v-if="val==4" :style="{position: 'absolute',bottom: '0px',right: 14*(_in+1)+'px',color: '#00A753',fontSize: '12px'}">节</div>
-                                        </span>
-                                    </span>
-                                </span>
+                                        </span>                                    </span>                                </span>
                                 <!--循环日历上面的状态 over-->
                             </span>
 
@@ -158,13 +187,9 @@
                                             <div v-if="val==2" :style="{position: 'absolute',bottom: '0px',right: -14*(_in+1)+'px',color: '#5856D6',fontSize: '12px'}">差</div>
                                             <div v-if="val==3" :style="{position: 'absolute',bottom: '0px',right: -14*(_in+1)+'px',color: '#FF9500',fontSize: '12px'}">假</div>
                                             <div v-if="val==4" :style="{position: 'absolute',bottom: '0px',right: -14*(_in+1)+'px',color: '#00A753',fontSize: '12px'}">节</div>
-                                        </span>
-                                    </span>
-                                </span>
+                                        </span>                                    </span>                                </span>
                                 <!--循环日历上面的状态 over-->
-                            </span>
-                        </span>
-                    </div>
+                            </span>                        </span>                    </div>
                 </div>
                 <div id="attendwrapright" style="float: right;width: 39%;border-left: 1px solid #E6E6EB;height: 284px;margin-top: 8px;text-align: center;">
                     <!--                 <div>
@@ -177,14 +202,13 @@
                          <div style="margin-top: 20px;"><i>图</i><span style="color: #2D2D2D;font-size: 14px;">上班：</span><span style="color: #2D2D2D;font-size: 14px;">08:35:00(正常)</span></div>
 
                      </div>-->
-                </div>
-            </div>
+                    <span class="col-md-8 text-left">07/14/2019</span></div>
+          </div>
             <!--footer-->
             <div style="height: 47px;border-top: 1px solid #E6E6EB;line-height: 47px;">
                 <span style="width: 6px;height: 6px;border-radius: 100%;background: red;display: inline-block;margin-left: 16px;"></span>
-                <span style="color: #666666;font-size: 13px;position: relative;top: 1px;line-height: 13px;">异常</span>
-            </div>
-        </div>
+                <span style="color: #666666;font-size: 13px;position: relative;top: 1px;line-height: 13px;">异常</span>            </div>
+      </div>
     </div>
     <!--<script src="http://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js" type="text/javascript" charset="utf-8"></script>-->
     <script src="{% static 'JS/vue.js' %}" type="text/javascript" charset="utf-8"></script>
@@ -381,8 +405,6 @@
 
     <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
         <p>适用浏览器：360、FireFox、Chrome、Opera、傲游、搜狗、世界之窗. 不支持Safari、IE8及以下浏览器。</p>
-
-
     </div>
 </body>
 </html>

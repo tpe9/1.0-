@@ -1,7 +1,7 @@
 /*!
  * Vue.js v2.2.6
- * (c) 2014-2017 Evan You
- * Released under the MIT License.
+
+
  */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -9,7 +9,7 @@
 	(global.Vue = factory());
 }(this, (function () { 'use strict';
 
-/*  */
+/* 这是从网上找下来的一段JavaScript代码可以实现日历的展示。把它引用到，记录那个地方。 */
 
 /**
  * Convert a value to a string that is actually rendered.
