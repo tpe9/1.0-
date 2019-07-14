@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>个人信息主页</title>
+    <style type="text/css">
+        body{
+            text-align:center
+        }
+        .body1{
+            align-self:center
+        }
+    </style>
+{% load staticfiles %}<script src="{% static 'JS/jquery.js' %}" type="text/javascript"></script>
+{% load staticfiles %}<script src="{% static 'JS/jquery.cookie.js' %}" type="text/javascript"></script>
+
+{% load staticfiles %}
+</head>
+
+{% load staticfiles %}<body class="body1" style="background-image: url(http://pic.sc.chinaz.com/files/pic/pic9/201904/bpic11566.jpg)">
+
+<h1 class="body1"><div class="h1">
+个人信息主页
+</div></h1>
+<div id="form">
+<!-- 通过表单形式获取用户的个人信息。包括，真实姓名，邮箱，性别，年龄。职位，部门、项目编号。家庭住址等。通过昵称来唯一标识。类型设计成textarea。让用户可以自己编辑。 -->
+<form action="/myinformation_edit/" method="post">{% csrf_token %}
+    <div class="body1">
+<div >昵称:{{username}}</div>
+<div>
+    性别:<!--性别通过单选框来选择。-->
+    <input type="radio" id="sex1" name="sex" value="先生" />男&nbsp;
+    <input type="radio" id="sex1" name="sex" value="女士" />女<br>
+</div>
+<div  >邮箱:
+<textarea name="email" id="email" cols="20" rows="1">{{email}}</textarea><br></div>
+    <div  >真实姓名:
+<textarea name="name" id="name" cols="20" rows="1">{{name}}</textarea><br></div>
+<div  >年龄:
+<textarea name="age" id="age" cols="10" rows="1">{{age}}</textarea><br></div>
+<div  >电话号码:
+<textarea name="telenum" id="telenum" cols="20" rows="1">{{telenum}}</textarea><br></div>
+<div  >职位:
+<textarea name="position" id="position" cols="20" rows="1">{{position}}</textarea><br></div>
+
+<div  >部门:
+<textarea name="department" id="department" cols="20" rows="1">{{deparment}}</textarea><br></div>
+
+<div  >项目编号:
+<textarea name="pronum" id="pronum" cols="20" rows="1">{{pronum}}</textarea><br></div>
+
+<div  >家庭住址:</div>
+<textarea name="homeaddress" id="homeaddress" cols="50" rows="2">{{homeaddress}}</textarea><br></div>
+<input type="submit"  value="提交">
+    </div>
+</form>
+
+<form action="/index/" method="get">
+    <input type="button" name="return"  value="返回上页"></form>
+
+</body>
+
+</html>
