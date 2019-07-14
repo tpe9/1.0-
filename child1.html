@@ -8,16 +8,13 @@
             background-image: url(http://i2.tiimg.com/693758/8e248b97c4eec1cc.jpg)
         }
     </style>
-    {% load staticfiles %}
-    <script src="{% static 'JS/jquery.js' %}" type="text/javascript"></script>
-    {% load staticfiles %}
-    <script src="{% static 'JS/jquery.cookie.js' %}" type="text/javascript"></script>
-
-    {% load staticfiles %}
+{% load staticfiles %}<script src="{% static 'JS/jquery.js' %}" type="text/javascript"></script>
+{% load staticfiles %}<script src="{% static 'JS/jquery.cookie.js' %}" type="text/javascript"></script>
 </head>
 
 
 <body>
+<!--下面是迟到记录。获取到用户的迟到记录后，通过表格形式来展示。-->
 <form action="/child1/" method="post">{% csrf_token %}
 <div align="center">
 <h2><font color="red">迟到记录</font></h2>

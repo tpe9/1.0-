@@ -8,14 +8,11 @@
             background-image: url(http://i2.tiimg.com/693758/8e248b97c4eec1cc.jpg)
         }
     </style>
-    {% load staticfiles %}
-    <script src="{% static 'JS/jquery.js' %}" type="text/javascript"></script>
-    {% load staticfiles %}
-    <script src="{% static 'JS/jquery.cookie.js' %}" type="text/javascript"></script>
-
-    {% load staticfiles %}
+{% load staticfiles %}<script src="{% static 'JS/jquery.js' %}" type="text/javascript"></script>
+{% load staticfiles %}<script src="{% static 'JS/jquery.cookie.js' %}" type="text/javascript"></script>
 </head>
 <body>
+<!--下面是请假记录。获取到用户的请假记录后，通过表格形式来展示。-->
 <form action="/child3/" method="post">{% csrf_token %}
     <div align="center">
         <h2><font color="#FF00FF">请假记录</font></h2>
