@@ -3,13 +3,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <title>注册</title>
 </head>
+
 <body>
+    <button onclick="openMedia()">开启摄像头</button>
+    <video id="video" width="500px" height="500px" autoplay="autoplay"></video>
+    <canvas id="canvas" width="500px" height="500px"></canvas>
+    <button onclick="takePhoto()">拍照</button>
+    <input type="image" id="imgTa" name='picture' src="" alt="">
+
+    <a id="tttt"></a>
      <div style="margin: 20% 40%;">
         <h1>欢迎注册！</h1>
-       <form action="/register/" method="post">
+       <form action="/register/" method="post" enctype="multipart/form-data">
        	{% if message %}
                     <div class="alert alert-warning">{{ message }}</div>
                 {% endif %}
@@ -21,22 +30,95 @@
             </p>
             <p>
                 <label for="id_email">邮箱：</label>
-                <input type="text" id="id_email" name="email" placeholder="邮箱" autofocus required />
+                <input type="email" id="id_email" name="email" placeholder="邮箱" autofocus required />
             </p>
+                <input type="button" onclick="sumbitForm()" value="获取验证码" name="code_but">
           	<p>
                 <label for="id_vcode">验证码：</label>
-                <input type="text" id="id_vcode	" name="vcode" placeholder="验证码"  />
+                <input type="text" id="id_vcode	" name="vcode" placeholder="验证码"  required/>
             </p>
             <p>
                 <label for="id_password">密码：</label>
-                <input type="password" id="id_password" placeholder="密码" name="password"  >
+                <input type="password" id="id_password" placeholder="密码" name="password" required />
             </p>
             <p>
                 <label for="IMEI">IMEI：</label>
-                <input type="text" id="iIMEI" placeholder="密码" name="IMEI" required >
+                <input type="text" id="iIMEI" placeholder="密码" name="IMEI"  >
             </p>
+            <input type="hidden" id='pic' name='picture' required>
             <input type="submit" value="确定" name="reg_but">
-            <input type="submit" value="获取验证码" name="code_but">
+
         </form>
+     <p id="createResult"></p>
+
         
     </div>
+</body>
+{% load staticfiles %}<script src="{% static 'JS/jquery.js' %}" type="text/javascript"></script>
+{% load staticfiles %}<script src="{% static 'JS/jquery.cookie.js' %}" type="text/javascript"></script>
+<script  type="text/javascript">
+    function sumbitForm(){
+
+        var token = $.cookie('csrftoken');
+
+         $.ajax({
+             url: "/get_vcode/",
+            type: "post",
+            dataType:"json",
+             headers:{'X-CSRFToken': token},
+            data: {"username": $("#id_username").val(), "email": $("#id_email").val() },
+            success: function (arg) {
+
+                 {#alert(arg);#}
+                 // 把返回的结果填充到 id是i3的input框中
+                $("#searchResult").html(arg.message);
+                alert(arg.message);
+                 $("#i3").val(arg)
+             },
+             error: function(jqXHR){
+			   alert("发生错误：" );
+			},
+         })
+     }
+ </script>
+<script>
+        let mediaStreamTrack=null; // 视频对象(全局)
+        function openMedia() {
+            let constraints = {
+                video: { width: 500, height: 500 },
+                audio: false
+            };
+            //获得video摄像头
+            let video = document.getElementById('video');     
+            let promise = navigator.mediaDevices.getUserMedia(constraints);
+            promise.then((mediaStream) => {
+                mediaStreamTrack = typeof mediaStream.stop === 'function' ? mediaStream : mediaStream.getTracks()[1];
+                video.srcObject = mediaStream;
+                video.play();
+            });
+        }
+
+        // 拍照
+        function takePhoto() {
+            //获得Canvas对象
+            let video = document.getElementById('video');
+            let canvas = document.getElementById('canvas');
+            let ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, 500, 500);
+
+            let img = document.getElementById('canvas').toDataURL('image/png');
+            // 这里的img就是得到的图片
+            console.log(img);
+            document.getElementById('pic').value=img;
+            mediaStreamTrack.stop();
+        }
+
+        // 关闭摄像头
+        function closeMedia() {
+            mediaStreamTrack.stop();
+        }
+
+        
+    </script>
+
+</html>

@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>请假记录</title>
+    <style type="text/css">
+        body {
+            background-image: url(http://i2.tiimg.com/693758/8e248b97c4eec1cc.jpg)
+        }
+    </style>
+
+</head>
+<body>
+<form action="/ask_for_leave/" method="post">{% csrf_token %}
+    <input type="date" name="date"><br>
+    <input type="submit" value="请假" name="apply">
+    {% if message %}
+    <div>{{ message }}</div>
+    {% endif %}
+
+	</form>
+    <div align="center">
+        请假辛苦了！
+
+            <h2><font color="yellow">请假记录</font></h2>
+            <table border="1">
+                <tr>
+                    <td width="200">请假日期</td>
+                     <td width="200">请假项目</td>
+                    <td width="200">请求时间</td>
+                </tr>
+
+                {% for date,pronum,time in accept %}
+                    <tr>
+                    <td width="200">
+                        {{date}}
+                    </td>
+                    <td width="200">
+                        {{pronum}}
+                    </td>
+                    <td width="200">
+                        {{time}}
+                    </td>
+                    </tr>
+                    {% endfor %}
+
+            </table>
+        <h2><font color="yellow">请假失败</font></h2>
+            <table border="1">
+                <tr>
+                    <td width="200">请假日期</td>
+                     <td width="200">请假项目</td>
+                    <td width="200">请求时间</td>
+                </tr>
+
+                {% for date,pronum,time in refuse %}
+                    <tr>
+                    <td width="200">
+                        {{date}}
+                    </td>
+                    <td width="200">
+                        {{pronum}}
+                    </td>
+                    <td width="200">
+                        {{time}}
+                    </td>
+                    </tr>
+                    {% endfor %}
+
+            </table>
+    <form action="/index/" method="get">
+            {% csrf_token %}
+            <input type="submit" name="Submit" value="返回上页"></form>
+    </div>
+</body>
+</html>

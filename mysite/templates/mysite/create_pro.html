@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>创建项目</title>
+<style type="text/css">
+    html,body{
+        width: 500px;
+        height: 300px;
+        margin: 0px;
+    }
+    .map{
+        height: 300px;
+        width: 500px;
+        float: left;
+    }
+</style>
+{% load staticfiles %}<link rel="stylesheet" href="{% static 'CSS/index.css' %}">
+
+<style>
+*{
+margin: 0;
+padding: 0;
+}
+.div1
+{
+	font-size: 70px;
+	font-family: 'Courier New', Courier, monospace;
+	color: white;
+	position: fixed;
+	top: 550px;
+	left:500px;
+ 	letter-spacing: 10px;
+	animation:myfirst 3s;
+	-webkit-animation:myfirst 3s; /* Safari and Chrome */
+	
+}
+@keyframes myfirst
+{
+	from {opacity:0;}
+	to {opacity:1;}
+}
+@-webkit-keyframes myfirst 
+{    /* Safari and Chrome */
+	from {opacity:0;}
+	to {opacity:1;}
+}
+</style>
+{% load staticfiles %}<script src="{% static 'JS/jquery.js' %}" type="text/javascript"></script>
+{% load staticfiles %}<script src="{% static 'JS/jquery.cookie.js' %}" type="text/javascript"></script>
+{% load staticfiles %}<script src="{% static 'JS/in.js' %}" type="text/javascript"></script>
+{% load staticfiles %}
+</head>
+
+{% load staticfiles %}<body class="body1" style="background-image: url('{% static 'html_img/home.jpg' %}')">
+
+
+<h1><div class="div1">
+创建项目
+</div></h1>
+
+</div>
+<div id="form">
+
+<form action="/create_pro/" method="post" class=form1>{% csrf_token %}
+<div >项目创始人:{{username}}({{ name }})</div>
+<div  >企业名:
+<textarea name="company" id="company" cols="10" rows="1" required>{{company}}</textarea><br></div>
+<div  >打卡地点:
+<input id='address' type="text" required> 
+<div  >打卡地点:
+<textarea name="location" id="lnglat" cols="20" rows="1" readonly required>{{location}}</textarea><br></div>
+<div  >上班时间:
+<input type="time" name="timeon" id="timeon" cols="10" rows="1" required><br></div>
+<div  >下班时间:
+<input type="time"name="timeoff" id="timeoff" cols="20" rows="1" required><br></div>
+<div  >备注信息:
+<textarea name="ps" id="ps" cols="20" rows="1" >{{ps}}</textarea><br></div>
+<input type="submit" value="提交">
+    {% if message %}
+        <div>{{ message }}</div>
+        <div>您的项目编号：{{ pronum }}</div>
+    {% endif %}
+</form>
+</div>
+<div id="container" class="map"></div>
+<div class="input-card">
+    <h4>当前点击获取经纬度：</h4>
+    <div class="input-item">
+
+    </div>
+    
+    
+<input type="button" name="Submit" onclick="javascript:history.back(-1);" value="返回上页">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://webapi.amap.com/maps?v=1.4.15&key=e066257a4bb47a5b01e3a7c340dbd03e&plugin=AMap.Autocomplete"></script>
+<script type="text/javascript">
+    var map = new AMap.Map("container", {
+        resizeEnable: true
+    });
+    var options = {
+        'showButton': true,//是否显示定位按钮
+		'buttonPosition': 'LB',//定位按钮的位置
+		/* LT LB RT RB */
+		'buttonOffset': new AMap.Pixel(10, 20),//定位按钮距离对应角落的距离
+		'showMarker': true,//是否显示定位点
+		'markerOptions':{//自定义定位点样式，同Marker的Options
+		  'offset': new AMap.Pixel(-18, -36),
+		  'content':'<img src="https://a.amap.com/jsapi_demos/static/resource/img/user.png" style="width:36px;height:36px"/>'
+		},
+		'showCircle': true,//是否显示定位精度圈
+		'circleOptions': {//定位精度圈的样式
+			'strokeColor': '#0093FF',
+			'noSelect': true,
+			'strokeOpacity': 0.5,
+			'strokeWeight': 1,
+			'fillColor': '#02B0FF',
+			'fillOpacity': 0.25
+		}
+    }
+    AMap.plugin(["AMap.Geolocation"], function() {
+        var geolocation = new AMap.Geolocation(options);
+        map.addControl(geolocation);
+        geolocation.getCurrentPosition()
+        
+    });
+    //为地图注册click事件获取鼠标点击出的经纬度坐标
+    map.on('click', function(e) {
+        document.getElementById("lnglat").value = e.lnglat.getLng() + ',' + e.lnglat.getLat()
+        var lnglat  = document.getElementById('lnglat').value.split(',');
+        geocoder = new AMap.Geocoder({
+                city: "010", //城市设为北京，默认：“全国”
+                radius: 1000 //范围，默认：500
+            });
+        geocoder.getAddress(e.lnglat, function(status, result) {
+            if (status === 'complete'&&result.regeocode) {
+                var address = result.regeocode.formattedAddress;
+                document.getElementById('address').value = address;
+            }else{
+                log.error('根据经纬度查询地址失败')
+            }
+        });
+    });
+
+
+    var auto = new AMap.Autocomplete({
+        input: "tipinput"
+    });
+    AMap.event.addListener(auto, "select", select);//注册监听，当选中某条记录时会触发
+    function select(e) {
+        if (e.poi && e.poi.location) {
+            map.setZoom(15);
+            map.setCenter(e.poi.location);
+        }
+    }
+
+    
+
+
+
+    
+
+</script>
+</body>
+
+</html>

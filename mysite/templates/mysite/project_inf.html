@@ -1,0 +1,33 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>项目信息</title>
+
+
+</head>
+<body>
+<div class="row text-center vertical-middle-sm">
+    <h1>项目信息</h1>
+    <div class="row">
+        <div class="col-md-6">    <!-- 每一项都需要相应参数 -->
+            <form action="/project_inf/" method="post">{% csrf_token %}
+                <div class="col-md-4 text-right"><span>项目创始人:>{{username}}</span></div>
+                <div class="col-md-4 text-right"><span>项目ID:{{pronum}}</span></div>
+                <div class="col-md-4 text-right"><span>企业名称:{{company}}</span></div>       
+                <div class="col-md-4 text-right"><span>打卡地点:{{location}}</span></div>
+                <div class="col-md-4 text-right"><span>上班时间:{{timeon}}</span></div>
+                <div class="col-md-4 text-right"><span>下班时间:{{timeoff}}</span></div>
+                <div class="col-md-4 text-right"><span>备注:{{ps}}</span></div><br>
+                 <input type="submit" value="退出项目" name="quit" ></form>
+            <form action="/index/" method="get">
+                <input type="submit"  value="返回上页"></form>
+
+
+
+        </div>
+    </div>
+
+</div>
+</body>

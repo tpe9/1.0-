@@ -25,7 +25,7 @@ SECRET_KEY = ')%s$%@$1oplb%3cdmvbo)t=w!wk!)z^g5hd1atal8ahh^f!6sd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.137.23']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -118,7 +118,6 @@ USE_L10N = True
 
 USE_TZ = False
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
@@ -126,6 +125,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/media/')
+JUQERY_ROOT = os.path.join(BASE_DIR, 'static/juqery/')
 
 
 

@@ -3,62 +3,91 @@
 <head>
 <meta charset="utf-8"> 
 <title>CI考勤主界面</title> 
+{% load staticfiles %}<link rel="stylesheet" href="{% static 'CSS/index.css' %}">
 <style>
-h1{
-	color:AliceBlue;
-	text-align:center;
-	font-size:35px;
-	font-family:"微软雅黑"
-	letter-spacing:10px; 
+*{
+margin: 0;
+padding: 0;
 }
-
-.font-spacing{
-letter-spacing: 10px;
-}
-
-td.pos_fixed
+.div1
 {
-	position:fixed;
-	top:90px;
-	right:50px;
+	font-size: 70px;
+	font-family: 'Courier New', Courier, monospace;
+	color: white;
+	position: fixed;
+	top: 550px;
+	left:500px;
+ 	letter-spacing: 10px;
+	animation:myfirst 3s;
+	-webkit-animation:myfirst 3s; /* Safari and Chrome */
+	
 }
-
-#list{
-		right:150px;
-		position: absolute;
-		line-height:3em;
-		color:DarkSlateBlue;
-		font-size:35px;
-		font-family:"微软雅黑"
-		letter-spacing:5px;
-}
-
-body 
+@keyframes myfirst
 {
-	background-image:url('网站首页3.jpg');
-	background-repeat:no-repeat ;
-	background-size:100% 100%; 
-	background-attachment: fixed
+	from {opacity:0;}
+	to {opacity:1;}
+}
+@-webkit-keyframes myfirst 
+{    /* Safari and Chrome */
+	from {opacity:0;}
+	to {opacity:1;}
 }
 </style>
 </head>
 
-<body>
+{% load staticfiles %}<body class="body1" style="background-image: url('{% static 'html_img/home.jpg' %}')">
+	<div class="list">
+		<ul>
+			<li class="dropdown">
+				<a href="/myinformation_edit/" class="menubar">个人信息</a>
+			</li>  <!-- 需要传入相应模块的页面的网址 -->
+			<li class="dropdown">
+				<a href="url2" class="menubar">考勤记录</a>
+			</li>  <!-- 需要传入相应模块的页面的网址 -->
+			<li class="dropdown">
+				<p class="menubar">工作管理</p>
+				<ul class="dropdown-menu">
+					<li><a href="/check_in/">上班打卡</a></li>
+					<li><a href="/check_out/">下班打卡</a></li>
+					<li><a href="/ask_for_leave/">请假入口</a></li>
+					<li><a href="/business_apply/">出差入口</a></li>
+				</ul>
+			</li>  <!-- 需要传入相应模块的页面的网址 -->
+			<li class="dropdown">
+				<p class="menubar">项目管理</p>
+				<ul class="dropdown-menu">
+					<li><a href="/create_pro/">创建项目</a></li>
+					<li><a href="/my_project/">已创项目</a></li>
+					<li><a href="/project_enter/">加入项目</a></li>
+                    <li><a href="/project_inf/">已加项目</a></li>
+				</ul>
+			</li><!-- 需要传入相应模块的页面的网址 -->
+			<li class="dropdown">
+				<a href="{{user_url}}" class="menubar">{{ user_admin }}</a>
+				</ul>
+			</li>
+		</ul>
+	</div>
 
-<h1><div class="font-spacing">
-PROSHARKIE
-</div></h1>
+    {% for user,num,dateon,dateoff,order in ask %}
+        <div>出差请求：</div>
+        <form action="/index/" method="post" >{% csrf_token %}
+        <div>  工号：{{ num }}名称：{{ user }}   请假开始：{{ dateon }}  请假结束：{{ dateoff }} <input name="order" type="hidden" value="{{ order }}">
+            <input type="hidden"value="1" name="type"> <input type="submit" name="accept" value="同意"><input type="submit" name="refuse" value="拒绝"></div>
+        </form>
+    {% endfor %}
+    {% for user,num,date,order in ask2 %}
+        <div>出差请求：</div>
+        <form action="/index/" method="post" >{% csrf_token %}
+        <div>  工号：{{ num }}名称：{{ user }}   请假日期：{{ date }}  <input type="hidden" name="order" value="{{ order }}">
+            <input type="hidden"value="2"name="type"><input type="submit" name="accept" value="同意"><input type="submit" name="refuse" value="拒绝"></div>
+        </form>
+    {% endfor %}
 
-</div>
-<div id="list">
-<ul>
-<li><a href="url1">个人信息</a></li>  <!-- 需要传入相应模块的页面的网址 -->
-<li><a href="url2">考勤记录</a></li>
-<li><a href="url3">打卡入口</a></li>
-<li><a href="url4">项目管理</a></li>
-</ul>
-</div>
 
+	
+	<div class="div1">PROSHARKIE</div>
+  <div class="alert alert-warning">{{ token }}</div>
 </body>
 
 </html>

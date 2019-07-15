@@ -19,8 +19,8 @@ def check_email(msgTo, vericode):
 	msg['subject'] = 'shybee'
 	content = '''
 	你好:
-	  这是一封CI考勤验证邮件
-	'''+str(vericode)
+	  这是一封CI考勤验证邮件,您的验证码为
+	'''+str(vericode)+'，如果不是本人操作，请忽略。'
 	txt = email.mime.text.MIMEText(content)
 	msg.attach(txt)
 	smtp = smtplib

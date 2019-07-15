@@ -5,18 +5,20 @@
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
+
 </head>
-<body>
+{% load staticfiles %}<body class="body1" style="background-image: url('{% static 'html_img/home.jpg' %}')">
      <div style="margin: 15% 40%;">
         <h1>欢迎登录！</h1>
-       <form action="/login/" method="post">
-            {% if message %}
-                    <div class="alert alert-warning">{{ message }}</div>
-                {% endif %}
+        {% if message %}
+            <div>{{ message }}</div>
+         {% endif %}
+       <form action="/login/" method="post" enctype="multipart/form-data" id="form1">
+
         {% csrf_token %}
 
             <p>
-                <label for="id_username">用户名：</label>
+                <label for="id_username" >用户名：</label>
                 <input type="text" id="id_username" name="username" placeholder="用户名" autofocus required />
             </p>
           
@@ -24,18 +26,49 @@
                 <label for="id_password">密码：</label>
                 <input type="password" id="id_password" placeholder="密码" name="password" required >
             </p>
-            <p>
-                <label for="IMEI">IMEI：</label>
-                <input type="text" id="iIMEI" placeholder="密码" name="IMEI" required >
-            </p>
-            <input type="submit" value="确定">
+
+            <input  type="submit"  id='sure' value="确定">
+
+
+
         </form>
-         <form action="/login/" method="post">{% csrf_token %}
+
+         <form action="/forget/" method="post">{% csrf_token %}
             <input type="submit" value="找回密码",name='forget'>
+             <a href="/register/">注册账号</a>
          </form>
     </div>
 
 
 
 </body>
+{% load staticfiles %}<script src="{% static 'JS/jquery.js' %}" type="text/javascript"></script>
+{% load staticfiles %}<script src="{% static 'JS/jquery.cookie.js' %}" type="text/javascript"></script>
+<script  type="text/javascript">
+    function sumbitForm(){
+
+        var token = $.cookie('csrftoken');
+
+         $.ajax({
+             url: "/login/",
+            type: "post",
+            dataType:"text",
+             headers:{'X-CSRFToken': token},
+            data: {"username": "LX", "password": "123456"},
+            success: function (arg) {
+
+                 {#alert(arg);#}
+                 // 把返回的结果填充到 id是i3的input框中
+                var user_token = {{ message|safe  }}
+                alert("11111");
+                alert({{ message | safe }});
+                 $("#i3").val(arg)
+             },
+             error: function(jqXHR){
+			   alert("发生错误：" );
+			},
+         })
+     }
+
+ </script>
 </html>

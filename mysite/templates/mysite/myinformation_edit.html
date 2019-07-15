@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>个人信息主页</title>
+    <style type="text/css">
+        body {background-color:yellow}
+    </style>
+{% load staticfiles %}<script src="{% static 'JS/jquery.js' %}" type="text/javascript"></script>
+{% load staticfiles %}<script src="{% static 'JS/jquery.cookie.js' %}" type="text/javascript"></script>
+{% load staticfiles %}<script src="{% static 'JS/in.js' %}" type="text/javascript"></script>
+{% load staticfiles %}
+</head>
+
+{% load staticfiles %}<body class="body1" style="background-image: url('{% static 'html_img/home.jpg' %}')">
+
+<h1><div class="h1">
+个人信息主页
+</div></h1>
+
+</div>
+<div id="form">
+
+<form action="/myinformation_edit/" method="post">{% csrf_token %}
+<div >昵称:{{username}}</div>
+<div  >性别:
+<textarea name="sex" id="sex" cols="10" rows="1"placeholder="男/女" required>{{sex}}</textarea><br></div>
+<div  >邮箱:
+<textarea name="email" id="email" cols="20" rows="1"required>{{email}}</textarea><br></div>
+    <div  >真实姓名:
+<textarea name="name" id="name" cols="20" rows="1" required>{{name}}</textarea><br></div>
+<div  >年龄:
+<textarea name="age" id="age" cols="10" rows="1" required>{{age}}</textarea><br></div>
+<div  >电话号码:
+<textarea name="telenum" id="telenum" cols="20" rows="1" required>{{telenum}}</textarea><br></div>
+<div  >职位:
+<textarea name="position" id="position" cols="20" rows="1" required>{{position}}</textarea><br></div>
+
+<div  >部门:
+<textarea name="department" id="department" cols="20" rows="1" required>{{deparment}}</textarea><br></div>
+
+<div  >项目编号:
+<textarea name="pronum" id="pronum" cols="20" rows="1" readonly>{{pronum}}</textarea><br></div>
+
+<div  >家庭住址:</div>
+<textarea name="homeaddress" id="homeaddress" cols="50" rows="2" required>{{homeaddress}}</textarea><br></div>
+<input type="submit"  value="提交">
+</form>
+</div>
+<form action="/index/" method="get"><input type="submit" name="Submit"  value="返回上页"></form>
+
+</body>
+
+</html>

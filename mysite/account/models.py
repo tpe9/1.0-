@@ -1,21 +1,6 @@
 from django.db import models
 
-# Create your models here.
-class Users(models.Model):
-    user_ID = models.CharField(max_length=30, unique=True)
-    u_email = models.CharField(max_length=30, unique=True)
-    passwd = models.CharField(max_length=16)
-    UUID = models.CharField(max_length=16)
 
-
-
-    def __str__(self):
-        return self.user_ID
-
-    class Meta:
-        ordering = ['user_ID']
-        verbose_name = '用户'
-        verbose_name_plural = '用户'
 
 class Reg_mesg(models.Model):
     r_email = models.CharField(max_length=30, unique=True)
@@ -38,15 +23,18 @@ class Reg_mesg(models.Model):
 class Employee(models.Model):
 	usernum = models.AutoField(primary_key=True)
 	username=models.CharField(max_length=30)
-	IMEI = models.IntegerField(max_length=16,unique=True)
+	IMEI = models.CharField(max_length=16,unique=True)
 	telenum = models.IntegerField(max_length=15,null=True)
 	password = models.CharField(max_length=100)
 	email = models.EmailField(max_length=20,unique=True)
-	photo = models.ImageField(upload_to='img',null=True)
 	sex = models.BooleanField(max_length=1,choices=((0,'男'),(1,'女')),null=True)
 	position = models.CharField(max_length=10,null=True)
 	name =  models.CharField(max_length=20,null=True)
-	pronum = models.IntegerField(max_length=10,null=True)
+	pronum = models.IntegerField(max_length=10,null=True,default=0)
+	home = models.CharField(max_length=100,null=True,verbose_name = '家庭住址')
+	age = models.IntegerField(max_length=2,null=True,verbose_name = '年龄')
+	department=models.CharField(max_length=100,null=True)
+	birthday = models.DateField(max_length=20,null=True)
 
 
 	def __str__(self):
@@ -60,14 +48,18 @@ class Employee(models.Model):
 class project(models.Model):
 	pronum = models.IntegerField(max_length=20, unique=True)
 	usernum = models.IntegerField(max_length=10)
-	location = models.CharField(max_length=20)
+	location = models.CharField(max_length=35)
+	date=models.DateTimeField(auto_now=True)
+	adress =  models.CharField(max_length=100,null=True)
 	timeon = models.CharField(max_length=10)
 	timeoff = models.CharField(max_length=10)
-	ps = models.CharField(max_length=100,blank=True)#备注
+	ps = models.CharField(max_length=100,null=True)
+	company = models.CharField(max_length=20, verbose_name = '公司名',null=True)
+	notice=models.CharField(max_length=200,null=True)
 
 
 	def __str__(self):
-		 return self.pronumclass
+		return str(self.pronum)
 
 	class Meta:
 		ordering = ['pronum']
@@ -76,13 +68,16 @@ class project(models.Model):
 
 class dailycheck(models.Model):
 	usernum = models.IntegerField(max_length=6)
-	date = models.DateTimeField(max_length=10)
-	timeon = models.CharField(max_length=10)
-	timeoff = models.CharField(max_length=10)
-	leave = models.BooleanField(max_length=1, choices=((0, '否'), (1, '是')))#请假
+	pronum = models.IntegerField(max_length=6)
+	date = models.DateTimeField(max_length=20)
+	timeon = models.TimeField(max_length=10)
+	timeoff = models.TimeField(max_length=10)
+	late=models.BooleanField(default=1)
+	leave=models.BooleanField(default=1)
+
 
 	def __str__(self):
-		return self.usernum
+		return str(self.usernum)
 
 	class Meta:
 		ordering = ['usernum']
@@ -91,12 +86,14 @@ class dailycheck(models.Model):
 
 
 class leave(models.Model):
+	order= models.AutoField(primary_key=True)
+	pronum = models.IntegerField(max_length=6)
 	usernum = models.IntegerField(max_length=6)
-	date = models.DateTimeField(max_length=10)
-	timeon = models.CharField(max_length=10)
-	timeoff = models.CharField(max_length=10)
+	date = models.CharField(max_length=10,verbose_name = '请假日期时间')
+	accept=models.BooleanField(default=0)
+	time = models.DateTimeField(auto_now=True)
 	def __str__(self):
-		return self.usernum
+		return str(self.usernum)
 
 	class Meta:
 		ordering = ['usernum']
@@ -105,14 +102,18 @@ class leave(models.Model):
 
 
 
-class out_buss(models.Model):
+class business(models.Model):
+	order=models.AutoField(primary_key=True)
 	usernum = models.IntegerField(max_length=6)
+	pronum = models.IntegerField(max_length=6)
 	dateon = models.DateTimeField(max_length=10)
 	dateoff = models.DateTimeField(max_length=10)
+	accept =models.BooleanField(default=0)
+	time=models.DateTimeField(auto_now=True)
 
 
 	def __str__(self):
-		return self.usernum
+		return str(self.usernum)
 
 	class Meta:
 		ordering = ['usernum']
@@ -122,38 +123,60 @@ class out_buss(models.Model):
 
 
 
-class extra(models.Model):
-	usernum = models.IntegerField(max_length=6)
-	date = models.DateTimeField(max_length=10)
-	timeoff = models.CharField(max_length=10)
 
-	def __str__(self):
-		return self.usernum
+
+
+
+
+class user_token(models.Model):
+	user=models.CharField(max_length=8)
+	use_token=models.CharField(max_length=100,null=True)
+	user_last_time=models.DateTimeField(max_length=20,null=True)
+
+
+
+class dayoff(models.Model):
+	pronum = models.IntegerField(max_length=10, null=True, default=0)
+	date = models.CharField(max_length=10, verbose_name='休息日期')
+	class Meta:
+		verbose_name = '休息日'
+		verbose_name_plural='休息日'
+
+
+
+class dayon(models.Model):
+	pronum = models.IntegerField(max_length=10, null=True, default=0)
+	date = models.CharField(max_length=10, verbose_name='休息日期')
+
 
 
 	class Meta:
-		ordering = ['usernum']
-		verbose_name = '加班记录'
-		verbose_name_plural= '加班记录'
+		verbose_name = '加班'
+		verbose_name_plural='加班'
+
+
+class ask_for_perm(models.Model):
+	username=models.CharField(max_length=30)
+	pronum = models.IntegerField(max_length=10, null=True, default=0)
+	type = models.IntegerField(max_length=1)
+	order=models.IntegerField(max_length=10)
+
+
+
+	class Meta:
+		verbose_name = '请求'
+		verbose_name_plural='请求'
 
 
 
 
+class pro_date(models.Model):
+	username=models.CharField(max_length=30)
+	pronum = models.IntegerField(max_length=10)
+	dateon = models.DateField(max_length=10)
+	dateoff = models.DateField(null=True)
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+	class Meta:
+		verbose_name = '历史项目'
+		verbose_name_plural='历史项目'

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CheckOut</title>
+    <style>
+            .body{
+                {% load staticfiles %}background-image: url({% static 'html_img/home.jpg' %});
+                background-size: 100%;
+            }
+            .box{
+                position: relative;
+                text-align: center;
+                background-color:#dddd;
+                height: 50px;
+                width: 100px;
+                margin: 0 auto;
+                border-radius: 25px;
+                font-size: 20px;
+                padding: 10px;
+            }
+            ul{
+                list-style: none;
+            }
+            a{
+                text-decoration: none;
+            }
+    </style>
+</head>
+<body class="body">
+    <form action="/check_out/"  method="POST" id="Form">{% csrf_token %}
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+        {% if bool %}
+            <div>你早退了</div>
+        {% endif %}
+
+    </form>   
+    <div class="box" onclick="formSubmit()">下班打卡</div>
+    <script>
+        function formSubmit()
+        {
+            document.getElementById("Form").submit()
+        } 
+    </script>
+</body>
+</html>
